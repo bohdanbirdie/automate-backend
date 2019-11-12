@@ -6,4 +6,7 @@ export abstract class BaseEntity {
 
     @CreateDateColumn({ type: 'timestamptz', default: () => 'CURRENT_TIMESTAMP' })
     created_at: Date;
+
+    @CreateDateColumn({ type: 'timestamptz', default: () => 'CURRENT_TIMESTAMP', onUpdate: 'CURRENT_TIMESTAMP' })
+    updated_at: Date;
 }

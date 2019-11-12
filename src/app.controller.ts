@@ -1,7 +1,6 @@
-import { UserEntity } from './users/user.entity';
 import { CreateUserDto } from './users/dto/create-user.dto';
 import { UsersService } from './users/users.service';
-import { Controller, Request, Post, UseGuards, Get, Body, ForbiddenException, UseInterceptors, ClassSerializerInterceptor } from '@nestjs/common';
+import { Controller, Request, Post, UseGuards, Body, ForbiddenException } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { AuthService } from './auth/auth.service';
 
@@ -10,11 +9,12 @@ export class AppController {
   constructor(
     private readonly authService: AuthService,
     private readonly usersService: UsersService
-  ) {}
+  ) { }
 
   @UseGuards(AuthGuard('local'))
   @Post('auth/login')
   async login(@Request() req) {
+    console.log('Login');
     return this.authService.login(req.user);
   }
 
@@ -27,12 +27,9 @@ export class AppController {
 
     return this.usersService.addOne(createUserDto);
   }
-  
-  @UseInterceptors(ClassSerializerInterceptor)
-  @UseGuards(AuthGuard())
-  @Get('profile')
-  async getProfile(@Request() req): Promise<UserEntity> {
-    const existingUser = await this.usersService.findOne(req.user.username);
-    return existingUser;
+
+  @Post('location')
+  async location(@Body() loc: any) {
+    console.log(loc);
   }
 }

@@ -6,12 +6,14 @@ import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 import { Connection } from 'typeorm';
 import { configService } from './config/config.service';
+import { ZonesModule } from './zones/zones.module';
 
 @Module({
   imports: [
     AuthModule,
     UsersModule,
     TypeOrmModule.forRoot(configService.getTypeOrmConfig()),
+    ZonesModule,
   ],
   controllers: [AppController],
   providers: [AppService],
