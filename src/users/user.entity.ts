@@ -1,3 +1,5 @@
+import { EventEntity } from './../events/event.entity';
+import { AutomationEntity } from './../automations/automation.entity';
 import { Entity, Column, ManyToMany } from 'typeorm';
 import { Exclude } from 'class-transformer';
 import { BaseEntity } from 'src/shared/base.entity';
@@ -15,4 +17,12 @@ export class UserEntity extends BaseEntity {
   @Exclude()
   @ManyToMany(type => ZoneEntity, zone => zone.users)
   zones: ZoneEntity[];
+
+  @Exclude()
+  @ManyToMany(type => AutomationEntity, automation => automation.users)
+  automations: AutomationEntity[];
+
+  @Exclude()
+  @ManyToMany(type => EventEntity, event => event.users)
+  events: EventEntity[];
 }

@@ -7,6 +7,10 @@ import { UsersModule } from './users/users.module';
 import { Connection } from 'typeorm';
 import { configService } from './config/config.service';
 import { ZonesModule } from './zones/zones.module';
+import { EventsController } from './events/events.controller';
+import { EventsService } from './events/events.service';
+import { EventsModule } from './events/events.module';
+import { AutomationsModule } from './automations/automations.module';
 
 @Module({
   imports: [
@@ -14,9 +18,11 @@ import { ZonesModule } from './zones/zones.module';
     UsersModule,
     TypeOrmModule.forRoot(configService.getTypeOrmConfig()),
     ZonesModule,
+    EventsModule,
+    AutomationsModule,
   ],
-  controllers: [AppController],
-  providers: [AppService],
+  controllers: [AppController, EventsController],
+  providers: [AppService, EventsService],
 })
 export class AppModule {
   constructor(private readonly connection: Connection) {}

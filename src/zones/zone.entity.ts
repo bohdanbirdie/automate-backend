@@ -1,3 +1,4 @@
+import { AutomationEntity } from './../automations/automation.entity';
 import { UserEntity } from './../users/user.entity';
 import { Entity, Column, ManyToMany, JoinTable } from 'typeorm';
 import { BaseEntity } from 'src/shared/base.entity';
@@ -36,4 +37,9 @@ export class ZoneEntity extends BaseEntity {
   @ManyToMany(type => UserEntity, user => user.zones)
   @JoinTable()
   users: UserEntity[];
+
+  @Exclude()
+  @ManyToMany(type => AutomationEntity, automation => automation.zones)
+  @JoinTable()
+  zones: AutomationEntity[];
 }
