@@ -1,6 +1,6 @@
 import { CreateUserDto } from './users/dto/create-user.dto';
 import { UsersService } from './users/users.service';
-import { Controller, Request, Post, UseGuards, Body, ForbiddenException } from '@nestjs/common';
+import { Controller, Request, Post, UseGuards, Body, ForbiddenException, Get } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { AuthService } from './auth/auth.service';
 
@@ -18,6 +18,13 @@ export class AppController {
     return this.authService.login(req.user);
   }
 
+  @UseGuards(AuthGuard())
+  @Get('refresh')
+  async refreshToken(@Request() req) {
+    const token = this.authService.login(req.user);
+    return token;
+  }
+
   @Post('auth/register')
   async register(@Body() createUserDto: CreateUserDto) {
     const existingUser = await this.usersService.findOne(createUserDto.username);
@@ -28,8 +35,12 @@ export class AppController {
     return this.usersService.addOne(createUserDto);
   }
 
-  @Post('location')
-  async location(@Body() loc: any) {
-    console.log(loc);
-  }
+  // @UseGuards(AuthGuard())
+  // @Post('location')
+  // async location(@Body() loc: any, @Request() req) {
+  //   if (loc && loc.location && loc.location.event === 'geofence') {
+  //     console.log(loc.location.geofence);
+  //     console.log(req.user);
+  //   }
+  // }
 }

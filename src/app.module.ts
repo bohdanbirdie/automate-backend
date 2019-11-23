@@ -11,6 +11,7 @@ import { EventsController } from './events/events.controller';
 import { EventsService } from './events/events.service';
 import { EventsModule } from './events/events.module';
 import { AutomationsModule } from './automations/automations.module';
+import { GeofencesModule } from './geofences/geofences.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { AutomationsModule } from './automations/automations.module';
     ZonesModule,
     EventsModule,
     AutomationsModule,
+    GeofencesModule,
   ],
   controllers: [AppController, EventsController],
   providers: [AppService, EventsService],

@@ -1,8 +1,9 @@
 import { AutomationEntity } from './../automations/automation.entity';
 import { UserEntity } from './../users/user.entity';
-import { Entity, Column, ManyToMany, JoinTable } from 'typeorm';
+import { Entity, Column, ManyToMany, JoinTable, OneToMany } from 'typeorm';
 import { BaseEntity } from 'src/shared/base.entity';
 import { Exclude } from 'class-transformer';
+import { AutomationZoneEntity } from 'src/automations/automation_zone.entity';
 
 @Entity({ name: 'zones' })
 export class ZoneEntity extends BaseEntity {
@@ -38,8 +39,6 @@ export class ZoneEntity extends BaseEntity {
   @JoinTable()
   users: UserEntity[];
 
-  @Exclude()
-  @ManyToMany(type => AutomationEntity, automation => automation.zones)
-  @JoinTable()
-  zones: AutomationEntity[];
+  @OneToMany(type => AutomationZoneEntity, automationZone => automationZone.zone)
+  automationZones: Promise<AutomationZoneEntity[]>;
 }
