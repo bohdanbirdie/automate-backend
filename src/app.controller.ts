@@ -31,16 +31,11 @@ export class AppController {
     if (existingUser) {
       throw new ForbiddenException();
     }
+   
+    const newUser = await this.usersService.addOne(createUserDto);
+    const token = await this.authService.getTokenForEntity(newUser);
 
-    return this.usersService.addOne(createUserDto);
+    return token;
   }
 
-  // @UseGuards(AuthGuard())
-  // @Post('location')
-  // async location(@Body() loc: any, @Request() req) {
-  //   if (loc && loc.location && loc.location.event === 'geofence') {
-  //     console.log(loc.location.geofence);
-  //     console.log(req.user);
-  //   }
-  // }
 }

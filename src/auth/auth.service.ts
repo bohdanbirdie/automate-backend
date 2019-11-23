@@ -1,3 +1,4 @@
+import { UserEntity } from 'src/users/user.entity';
 import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { UsersService } from '../users/users.service';
@@ -21,6 +22,14 @@ export class AuthService {
 
   async login(userPayload: any) {
     const user = await this.usersService.findOne(userPayload.username);
+    const payload = { username: user.username, sub: user.id };
+
+    return {
+      access_token: this.jwtService.sign(payload),
+    };
+  }
+
+  async getTokenForEntity(user: UserEntity) {
     const payload = { username: user.username, sub: user.id };
 
     return {
